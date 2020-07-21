@@ -17,18 +17,7 @@
 
 package org.apache.carbondata.core.util;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.Closeable;
-import java.io.DataInputStream;
-import java.io.DataOutputStream;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.ObjectInputStream;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.math.BigDecimal;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
@@ -2137,7 +2126,7 @@ public final class CarbonUtil {
     if (fistFilePath == null) {
       // Check if we can infer the schema from the hive metastore.
       LOGGER.error("CarbonData file is not present in the table location");
-      throw new IOException("CarbonData file is not present in the table location");
+      throw new FileNotFoundException("CarbonData file is not present in the table location");
     }
     CarbonHeaderReader carbonHeaderReader = new CarbonHeaderReader(fistFilePath, configuration);
     List<ColumnSchema> columnSchemaList = carbonHeaderReader.readSchema();

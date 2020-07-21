@@ -17,6 +17,7 @@
 
 package org.apache.carbondata.hive;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -116,7 +117,10 @@ public class MapredCarbonInputFormat extends CarbonTableInputFormat<ArrayWritabl
     try {
       carbonTable = getCarbonTable(jobContext.getConfiguration(),
           jobContext.getConfiguration().get(hive_metastoreConstants.META_TABLE_LOCATION));
-    } catch (Exception e) {
+    } catch (FileNotFoundException e) {
+      return new InputSplit[0];
+    }
+    catch (Exception e) {
       throw new IOException("Unable read Carbon Schema: ", e);
     }
     List<String> partitionNames = new ArrayList<>();
